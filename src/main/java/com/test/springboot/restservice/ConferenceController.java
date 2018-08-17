@@ -1,16 +1,23 @@
 package com.test.springboot.restservice;
 
 import com.test.springboot.restservice.dto.Conference;
-import com.test.springboot.restservice.dto.Conferences;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.validation.Valid;
+import static org.springframework.http.ResponseEntity.badRequest;
+import static org.springframework.http.ResponseEntity.ok;
 
-// TODO: Junit tests
 // TODO: H2 database
 // TODO: Docker
 // TODO: Heroku
@@ -20,6 +27,8 @@ import javax.validation.Valid;
 @RequestMapping(path = "/conference")
 public class ConferenceController {
 
+    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(ConferenceController.class);
+
     private final ConferenceService conferenceService;
 
     ConferenceController(final ConferenceService conferenceService) {
@@ -28,29 +37,31 @@ public class ConferenceController {
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<Conferences> getAllConferences() {
-        log.info("GET all conferences");
-        return new ResponseEntity<>(conferenceService.getAllConferences(), HttpStatus.OK);
+    public ResponseEntity<?> getAllConferences() {
+        logger.info("GET all conferences");
+        return ok(conferenceService.getAllConferences());
     }
 
     @GetMapping(path = "/{conferenceId}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<Conference>  getConference(
-            @Valid @PathVariable(value = "conferenceId") final String conferenceId) {
+    public ResponseEntity<?>  getConference(
+            @Valid @PathVariable(value = "conferenceId") final long conferenceId) {
+        logger.info("GET conference by Id" + conferenceId);
 
-        log.info("GET conference by Id");
-        return new ResponseEntity<>(conferenceService.getConference(conferenceId), HttpStatus.OK);
+        if(conferenceId < 1) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return ok(conferenceService.getConference(conferenceId));
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<Conference> createConference(@Valid @RequestBody final Conference conference) {
-        log.info("POST conference");
-        return new ResponseEntity<>(conference, HttpStatus.OK);
+    public ResponseEntity<?> createConference(@Valid @RequestBody final Conference conference) {
+        logger.info("POST conference");
+        return ok(conference);
     }
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<Conference> updateConference(@Valid @RequestBody final Conference conference) {
-        log.info("PUT conference");
-        return new ResponseEntity<>(conference, HttpStatus.OK);
+    public ResponseEntity<?> updateConference(@Valid @RequestBody final Conference conference) {
+        logger.info("PUT conference");
+        return ok(conference);
     }
-
 }
