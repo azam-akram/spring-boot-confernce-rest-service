@@ -1,0 +1,15 @@
+{
+  "title": "IETF",
+  "location": "Stockholm",
+  "eventDateTime": "2018-12-01",
+  "participants": [
+    {
+      "name": "BoB",
+      "email": "bob@test.com"
+    },
+    {
+      "name": "Alice",
+      "email": "alice@test.com"
+    }
+  ]
+}
