@@ -2,6 +2,7 @@ package com.test.springboot.restservice;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.test.springboot.restservice.controller.ConferenceController;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,22 +1,21 @@
-package com.test.springboot.restservice.dto;
+package com.test.springboot.restservice.entity;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import org.hibernate.validator.constraints.NotBlank;
 
-import javax.validation.constraints.NotNull;
-import java.util.List;
+import javax.persistence.*;
 
+@Entity
 @Getter
-@Setter
-@ToString
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Conference {
 
-    @NotNull
+    @Id
+    @GeneratedValue
     private long conferenceId;
 
     @NotBlank
@@ -25,9 +24,7 @@ public class Conference {
     @NotBlank
     private String location;
 
-    @NotBlank
-    private String eventDateTime;
-
-    @NotNull
-    private List<Participant> participants;
+    /*@NotNull
+    @OneToMany(targetEntity = Participant.class, fetch= FetchType.EAGER)
+    private List<Participant> participants;*/
 }

@@ -1,8 +1,8 @@
 package com.test.springboot.restservice;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.test.springboot.restservice.dto.Conference;
-import com.test.springboot.restservice.dto.Conferences;
+import com.test.springboot.restservice.entity.Conference;
+import com.test.springboot.restservice.entity.Conferences;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
